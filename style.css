@@ -1,0 +1,77 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif; /* Set default font */
+    background-color: #f4f4f9; /* Light background for the app */
+    margin: 0;
+    padding: 20px; /* Add padding around the page */
+    color: #333; /* Dark text color */
+}
+
+h1 {
+    text-align: center; /* Center the title */
+    color: #2c3e50; /* Dark blue color for the title */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+/* Form Styles */
+form {
+    display: flex; /* Align form elements in a row */
+    justify-content: center; /* Center the form on the page */
+    gap: 10px; /* Add space between form elements */
+    margin-bottom: 20px; /* Space below the form */
+}
+
+input[type="text"],
+input[type="tel"] {
+    padding: 10px; /* Padding inside the input fields */
+    border: 1px solid #ccc; /* Light border around input fields */
+    border-radius: 5px; /* Rounded corners for inputs */
+    width: 200px; /* Set width for the input fields */
+}
+
+button {
+    padding: 10px 15px; /* Add padding inside the buttons */
+    background-color: #3498db; /* Blue background for buttons */
+    color: white; /* White text color */
+    border: none; /* Remove borders from buttons */
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 14px; /* Set font size for buttons */
+}
+
+button:hover {
+    background-color: #2980b9; /* Darken the button on hover */
+}
+
+/* Sorting Dropdown */
+select {
+    padding: 10px; /* Padding inside the dropdown */
+    border: 1px solid #ccc; /* Light border around the dropdown */
+    border-radius: 5px; /* Rounded corners for dropdown */
+    background-color: white; /* White background for dropdown */
+    font-size: 14px; /* Set font size for dropdown */
+}
+
+/* Phonebook List Styles */
+ul {
+    list-style-type: none; /* Remove default bullet points from list */
+    padding: 0; /* Remove default padding from list */
+    max-width: 600px; /* Set maximum width for the list */
+    margin: 0 auto; /* Center the list on the page */
+}
+
+li {
+    background-color: #ecf0f1; /* Light grey background for list items */
+    margin: 10px 0; /* Add space between list items */
+    padding: 10px; /* Add padding inside each list item */
+    border-radius: 5px; /* Rounded corners for list items */
+    font-size: 16px; /* Increase font size for list items */
+    display: flex; /* Align text for better layout */
+    justify-content: space-between; /* Space out content inside list items */
+    border: 1px solid #bdc3c7; /* Light border around list items */
+}
+
+/* Phone number and name styling within each list item */
+li span {
+    font-weight: bold; /* Make the name/phone number bold */
+}

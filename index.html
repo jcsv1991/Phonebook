@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Phonebook Sorting App</title>
+</head>
+<body>
+    <h1>My Phonebook</h1>
+
+    <!-- Form to add a new phonebook entry with First Name, Last Name, and Phone Number -->
+    <form id="addEntryForm">
+        <input type="text" id="firstName" placeholder="First Name" required />
+        <input type="text" id="lastName" placeholder="Last Name" required />
+        <input type="tel" id="phoneNumber" placeholder="Phone Number (XXX-XXX-XXXX)" required />
+        <button type="submit">Add Entry</button>
+    </form>
+
+    <!-- Dropdown to select sorting criteria: First Name, Last Name, or Phone Number -->
+    <select id="sortCriteria">
+        <option value="firstName">Sort by First Name</option>
+        <option value="lastName">Sort by Last Name</option>
+        <option value="phoneNumber">Sort by Phone Number</option>
+    </select>
+    <button onclick="sortPhoneBook()">Sort</button>
+
+    <ul id="phoneBookList"></ul>
+
+    <script src="app.js"></script>
+</body>
+</html>
