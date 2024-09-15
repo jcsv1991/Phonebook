@@ -5,17 +5,25 @@ class PhoneBook {
     constructor() {
         // Array to store the phone book entries
         this.entries = [];
+        this.editIndex = null; // Keeps track of the index of the entry being edited
     }
 
     /**
-     * Adds a new entry to the phonebook.
+     * Adds or updates an entry in the phonebook.
      * @param {string} firstName - The first name of the contact.
      * @param {string} lastName - The last name of the contact.
      * @param {string} phoneNumber - The phone number of the contact in NANP format.
      */
-    addEntry(firstName, lastName, phoneNumber) {
+    addOrUpdateEntry(firstName, lastName, phoneNumber) {
         if (this.isValidPhoneNumber(phoneNumber)) {
-            this.entries.push({ firstName, lastName, phoneNumber });
+            if (this.editIndex !== null) {
+                // Update the existing entry
+                this.entries[this.editIndex] = { firstName, lastName, phoneNumber };
+                this.editIndex = null; // Reset after update
+            } else {
+                // Add new entry
+                this.entries.push({ firstName, lastName, phoneNumber });
+            }
         } else {
             alert("Invalid phone number format! Please use XXX-XXX-XXXX.");
         }
@@ -29,6 +37,26 @@ class PhoneBook {
     isValidPhoneNumber(phoneNumber) {
         const regex = /^\d{3}-\d{3}-\d{4}$/;
         return regex.test(phoneNumber);
+    }
+
+    /**
+     * Deletes an entry from the phonebook.
+     * @param {number} index - The index of the entry to delete.
+     */
+    deleteEntry(index) {
+        this.entries.splice(index, 1);
+    }
+
+    /**
+     * Populates the form with the details of the entry being edited.
+     * @param {number} index - The index of the entry being edited.
+     */
+    editEntry(index) {
+        const entry = this.entries[index];
+        document.getElementById('firstName').value = entry.firstName;
+        document.getElementById('lastName').value = entry.lastName;
+        document.getElementById('phoneNumber').value = entry.phoneNumber;
+        this.editIndex = index; // Store the index of the entry being edited
     }
 
     /**
@@ -48,7 +76,7 @@ class PhoneBook {
      * @returns {Array} - Sorted array.
      */
     mergeSort(array, criteria) {
-        if (array.length < 2) return array; // Base case: arrays with 1 element are already sorted
+        if (array.length < 2) return array;
 
         const mid = Math.floor(array.length / 2);
         const left = array.slice(0, mid);
@@ -73,7 +101,6 @@ class PhoneBook {
         let i = 0;
         let j = 0;
 
-        // Loop through both arrays and push the smaller element to the result
         while (i < left.length && j < right.length) {
             if (left[i][criteria] < right[j][criteria]) {
                 result.push(left[i]);
@@ -84,7 +111,6 @@ class PhoneBook {
             }
         }
 
-        // Concatenate remaining elements from both arrays
         return result.concat(left.slice(i)).concat(right.slice(j));
     }
 }
@@ -93,8 +119,8 @@ class PhoneBook {
 const phoneBook = new PhoneBook();
 
 /**
- * Event listener for the 'Add Entry' form.
- * Adds a new contact to the phonebook when the form is submitted.
+ * Event listener for the 'Add or Update Entry' form.
+ * Adds or updates a contact in the phonebook when the form is submitted.
  */
 document.getElementById('addEntryForm').addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent page reload on form submission
@@ -102,9 +128,13 @@ document.getElementById('addEntryForm').addEventListener('submit', function (e) 
     const lastName = document.getElementById('lastName').value;
     const phoneNumber = document.getElementById('phoneNumber').value;
 
-    // Add the new entry to the phonebook
-    phoneBook.addEntry(firstName, lastName, phoneNumber);
+    // Add or update the entry in the phonebook
+    phoneBook.addOrUpdateEntry(firstName, lastName, phoneNumber);
     displayEntries(); // Refresh the displayed list
+    // Clear form fields after submission
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
+    document.getElementById('phoneNumber').value = '';
 });
 
 /**
@@ -118,16 +148,41 @@ function sortPhoneBook() {
 
 /**
  * Displays all the entries in the phonebook on the page.
- * Updates the UI with the latest entries after sorting or adding.
+ * Updates the UI with the latest entries after sorting, adding, or editing.
  */
 function displayEntries() {
     const list = document.getElementById('phoneBookList');
     list.innerHTML = ''; // Clear the current list
 
-    // Loop through each entry in the phonebook and create a list item
-    phoneBook.entries.forEach(entry => {
+    // Loop through each entry in the phonebook and create a list item with edit/delete buttons
+    phoneBook.entries.forEach((entry, index) => {
         const li = document.createElement('li');
         li.textContent = `${entry.firstName} ${entry.lastName}: ${entry.phoneNumber}`;
-        list.appendChild(li); // Add the list item to the phonebook display
+
+        // Create a container for the buttons
+        const buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('button-container');
+
+        // Create Edit button for each entry
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.classList.add('edit');
+        editButton.onclick = () => phoneBook.editEntry(index);
+        buttonContainer.appendChild(editButton);
+
+        // Create Delete button for each entry
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = () => {
+            phoneBook.deleteEntry(index);
+            displayEntries(); // Refresh the list after deletion
+        };
+        buttonContainer.appendChild(deleteButton);
+
+        // Append the button container to the list item
+        li.appendChild(buttonContainer);
+
+        // Append the list item to the phonebook display
+        list.appendChild(li);
     });
 }

@@ -9,21 +9,26 @@
 <body>
     <h1>My Phonebook</h1>
 
-    <!-- Form to add a new phonebook entry with First Name, Last Name, and Phone Number -->
-    <form id="addEntryForm">
-        <input type="text" id="firstName" placeholder="First Name" required />
-        <input type="text" id="lastName" placeholder="Last Name" required />
-        <input type="tel" id="phoneNumber" placeholder="Phone Number (XXX-XXX-XXXX)" required />
-        <button type="submit">Add Entry</button>
-    </form>
+    <!-- Container for form and sort controls -->
+    <div class="controls-container">
+        <!-- Form to add or update a phonebook entry -->
+        <form id="addEntryForm">
+            <input type="text" id="firstName" placeholder="First Name" required />
+            <input type="text" id="lastName" placeholder="Last Name" required />
+            <input type="tel" id="phoneNumber" placeholder="Phone Number (XXX-XXX-XXXX)" required />
+            <button type="submit">Add Entry</button>
+        </form>
 
-    <!-- Dropdown to select sorting criteria: First Name, Last Name, or Phone Number -->
-    <select id="sortCriteria">
-        <option value="firstName">Sort by First Name</option>
-        <option value="lastName">Sort by Last Name</option>
-        <option value="phoneNumber">Sort by Phone Number</option>
-    </select>
-    <button onclick="sortPhoneBook()">Sort</button>
+        <!-- Sort controls -->
+        <div class="sort-controls">
+            <select id="sortCriteria">
+                <option value="firstName">Sort by First Name</option>
+                <option value="lastName">Sort by Last Name</option>
+                <option value="phoneNumber">Sort by Phone Number</option>
+            </select>
+            <button onclick="sortPhoneBook()">Sort</button>
+        </div>
+    </div>
 
     <ul id="phoneBookList"></ul>
 
